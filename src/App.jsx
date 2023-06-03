@@ -10,6 +10,7 @@ function App() {
     { id: "id-3", name: "Eden Clements", number: "645-17-79" },
     { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
   ]);
+
   const [filter, setFilter] = useState("");
 
   const addContact = (newContact) => {
@@ -23,8 +24,7 @@ function App() {
   return (
     <div>
       <h1>Książka Telefoniczna</h1>
-      <ContactForm addContact={addContact} />
-
+      <ContactForm addContact={addContact} contacts={contacts} />
       <h2>Kontakty</h2>
       <Filter filter={filter} setFilter={setFilter} />
       <ContactList

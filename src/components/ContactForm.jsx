@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { nanoid } from "nanoid";
 
-function ContactForm({ addContact }) {
+function ContactForm({ addContact, contacts }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -10,6 +10,15 @@ function ContactForm({ addContact }) {
     e.preventDefault();
 
     if (name.trim() === "" || number.trim() === "") {
+      return;
+    }
+
+    const isNameExist = contacts.some(
+      (contact) => contact.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (isNameExist) {
+      alert("Kontakt o podanej nazwie już istnieje!");
       return;
     }
 
@@ -52,13 +61,20 @@ function ContactForm({ addContact }) {
           onChange={(e) => setNumber(e.target.value)}
         />
       </div>
-      <button type="submit">Add contact</button>
+      <button type="submit">Dodaj kontakt</button>
     </form>
   );
 }
 
 ContactForm.propTypes = {
   addContact: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default ContactForm;
